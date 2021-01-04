@@ -1,0 +1,32 @@
+@namespace TailBlazor.Tabs
+@implements ITab
+
+<button @onclick="Activate" @onclick:preventDefault class="@(ContainerTabs.ActiveTab == this ? ContainerTabs.ActiveTabClass : ContainerTabs.DefaultTabClass)">
+    @if (TitleContent != null) {
+        @TitleContent
+    } else {
+        @Title
+    }
+</button>
+
+
+
+@functions {
+    [CascadingParameter] public TailBlazorTabs ContainerTabs { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment TitleContent { get; set; }
+    [Parameter] public RenderFragment TabContent { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        ContainerTabs.AddTab(this);
+    }
+
+    void Activate()
+    {
+        ContainerTabs.SetActivateTab(this);
+        StateHasChanged();
+    }
+}

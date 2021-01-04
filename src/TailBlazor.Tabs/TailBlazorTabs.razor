@@ -1,0 +1,51 @@
+@namespace TailBlazor.Tabs
+
+<CascadingValue Value=this>
+    <nav class="@NavClass" aria-label="Tabs">
+        @ChildContent
+    </nav>
+</CascadingValue>
+
+@(ActiveTab?.TabContent ?? ActiveTab?.ChildContent)
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string NavClass { get; set; } = "flex space-x-8 w-full";
+    [Parameter] public string ActiveTabClass { get; set; } = $"bg-gray-300 text-gray-700 {_baseTabClass}";
+    [Parameter] public string DefaultTabClass { get; set; } = $"text-gray-500 hover:text-gray-700 {_baseTabClass}";
+
+    private static string _baseTabClass = "px-3 py-2 font-medium text-sm rounded-md cursor-pointer";
+
+    public ITab ActiveTab { get; private set; }
+
+    public void AddTab(ITab tab)
+    {
+        if (ActiveTab == null)
+        {
+            SetActivateTab(tab);
+        }
+    }
+
+    public void RemoveTab(ITab tab)
+    {
+        if (ActiveTab == tab)
+        {
+            SetActivateTab(null);
+        }
+    }
+
+    public void SetActivateTab(ITab tab)
+    {
+        if (ActiveTab == tab) return;
+        ActiveTab = tab;
+        try
+        {
+            // Cannot process pending renders after the renderer has been disposed? try/catch hides this but gotta fix
+            InvokeAsync(() => { StateHasChanged(); });
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception.Message);
+        }
+    }
+}

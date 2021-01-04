@@ -1,0 +1,104 @@
+﻿@page "/fetchdata"
+
+@using TailBlazor.TabsServer.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <TailBlazorTabs NavClass="py-10">
+        <TailBlazorTab title="Weather in C">
+            <div class="shadow-lg overflow-hidden rounded-md border-b border-gray-200 sm:rounded-lg">
+                    <TailBlazorTableTemplate Context="forecast" Items=forecasts TItem=WeatherForecast TableClass="min-w-full divide-y divide-gray-200" HeaderClass="bg-gray-50">
+                    <TableHeader>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Date</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Temp. (C)</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Summary</th>
+                    </TableHeader>
+                    <RowTemplate>
+                        <td class="px-4 py-3 text-gray-700">@forecast.Date.ToShortDateString()</td>
+                        <td class="px-4 py-3 text-gray-700">@forecast.TemperatureC</td>
+                        <td class="px-4 py-3 text-gray-700">@forecast.Summary</td>
+                    </RowTemplate>
+                </TailBlazorTableTemplate>
+            </div>
+        </TailBlazorTab>
+        <TailBlazorTab title="Weather in F">
+            <div class="shadow-lg overflow-hidden rounded-md border-b border-gray-200 sm:rounded-lg">
+                    <TailBlazorTableTemplate Context="forecast" Items=forecasts TItem=WeatherForecast TableClass="min-w-full divide-y divide-gray-200" HeaderClass="bg-gray-50">
+                    <TableHeader>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Date</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Temp. (F)</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Summary</th>
+                    </TableHeader>
+                    <RowTemplate>
+                        <td class="px-4 py-3 text-gray-700">@forecast.Date.ToShortDateString()</td>
+                        <td class="px-4 py-3 text-gray-700">@forecast.TemperatureF</td>
+                        <td class="px-4 py-3 text-gray-700">@forecast.Summary</td>
+                    </RowTemplate>
+                </TailBlazorTableTemplate>
+            </div>
+        </TailBlazorTab>
+    </TailBlazorTabs>
+
+    <TailBlazorTabs NavClass="my-10 border-b border-grey-600 flex space-x-8" 
+    ActiveTabClass="border-indigo-500 text-indigo-600 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm" 
+    DefaultTabClass="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+        <TailBlazorTab title="Weather in C">
+            <TitleContent>
+                <svg class="text-indigo-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                </svg>
+                <span>Weather in C</span>
+            </TitleContent>
+            <TabContent>
+                <div class="shadow-lg overflow-hidden rounded-md border-b border-gray-200 sm:rounded-lg">
+                    <TailBlazorTableTemplate Context="forecast" Items=forecasts TItem=WeatherForecast TableClass="min-w-full divide-y divide-gray-200" HeaderClass="bg-gray-50">
+                        <TableHeader>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Date</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Temp. (C)</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Summary</th>
+                        </TableHeader>
+                        <RowTemplate>
+                            <td class="px-4 py-3 text-gray-700">@forecast.Date.ToShortDateString()</td>
+                            <td class="px-4 py-3 text-gray-700">@forecast.TemperatureC</td>
+                            <td class="px-4 py-3 text-gray-700">@forecast.Summary</td>
+                        </RowTemplate>
+                    </TailBlazorTableTemplate>
+                </div>
+            </TabContent>
+        </TailBlazorTab>
+        <TailBlazorTab title="Weather in F">
+            <div class="shadow-lg overflow-hidden rounded-md border-b border-gray-200 sm:rounded-lg">
+                <TailBlazorTableTemplate Context="forecast" Items=forecasts TItem=WeatherForecast TableClass="min-w-full divide-y divide-gray-200" HeaderClass="bg-gray-50">
+                    <TableHeader>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Date</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Temp. (F)</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Summary</th>
+                    </TableHeader>
+                    <RowTemplate>
+                        <td class="px-4 py-3 text-gray-700">@forecast.Date.ToShortDateString()</td>
+                        <td class="px-4 py-3 text-gray-700">@forecast.TemperatureF</td>
+                        <td class="px-4 py-3 text-gray-700">@forecast.Summary</td>
+                    </RowTemplate>
+                </TailBlazorTableTemplate>
+            </div>
+        </TailBlazorTab>
+    </TailBlazorTabs>
+}
+
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+}
