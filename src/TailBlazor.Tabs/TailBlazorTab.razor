@@ -1,7 +1,7 @@
 @namespace TailBlazor.Tabs
 @implements ITab
 
-<button @onclick="Activate" @onclick:preventDefault class="@(ContainerTabs.ActiveTab == this ? ContainerTabs.ActiveTabClass : ContainerTabs.DefaultTabClass)">
+<button @onclick="Activate" @onclick:preventDefault class="@(ContainerTabs.ActiveTab == this ? ActiveClass : Class)">
     @if (TitleContent != null) {
         @TitleContent
     } else {
@@ -12,12 +12,15 @@
 
 @functions {
     [CascadingParameter] public TailBlazorTabs ContainerTabs { get; set; }
+    [Parameter] public string ActiveClass { get; set; } = $"bg-gray-300 text-gray-700 {_baseTabClass}";
+    [Parameter] public string Class { get; set; } = $"text-gray-500 hover:text-gray-700 {_baseTabClass}";
     [Parameter] public string Title { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public RenderFragment TitleContent { get; set; }
     [Parameter] public RenderFragment TabContent { get; set; }
 
-
+    private static string _baseTabClass = "px-3 py-2 font-medium text-sm rounded-md cursor-pointer";
+    
     protected override void OnInitialized()
     {
         ContainerTabs.AddTab(this);

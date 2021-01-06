@@ -28,10 +28,10 @@ Add line to your \_Imports.razor
 
 ### 2. Create Tabs Component
 
-Inside your page create your tabs component with the basic format below. For tabs styles, use the `NavClass` parameter. Anything inside the `TailBlazorTab` automatically maps to the ChildContext and is displayed at the content for the tab. Using the parameter `title` inside the tab let's you name the tab.
+Inside your page create your tabs component with the basic format below. For tabs styles, use the `class` parameter. Anything inside the `TailBlazorTab` automatically maps to the ChildContext and is displayed at the content for the tab. Using the parameter `title` inside the tab let's you name the tab.
 
 ```
-<TailBlazorTabs NavClass="py-10">
+<TailBlazorTabs class="py-10">
     <TailBlazorTab title="Tab 1 Title">
         ...
     </TailBlazorTab>
@@ -51,9 +51,7 @@ Instead of using the title parameter, use the `TitleContent` RenderFragment to a
 ...
 <TailBlazorTab>
     <TitleContent>
-        <svg class="text-indigo-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-        </svg>
+        <TailBlazorHeroIcon Icon=HeroIcon.Beaker Stroke="text-indigo-500" />
         <span>Weather in C</span>
     </TitleContent>
     <TabContent>
@@ -67,11 +65,13 @@ Keep in mind if you use the `TitleContent`, you must then also use the `TabConte
 
 ### 4. Additional Styles
 
-On top of being able to use `TitleContent` and `NavClass`, you can also specify `ActiveTabClass` and `DefaultTabClass` to show which tab is active.
+On top of being able to use `TitleContent`, you can also specify `ActiveClass` and default `class` to show which tab is active and not. When the tab is active, the `class` parameter is completely replaced by the `ActiveClass` you giving you more control over just adding styles.
 
 ```
-<TailBlazorTabs NavClass="my-10 border-b border-grey-600 flex space-x-8" 
-    ActiveTabClass="border-indigo-500 text-indigo-600 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm" 
-    DefaultTabClass="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+<TailBlazorTabs class="my-10 border-b border-grey-600 flex space-x-8">
+    <TailBlazorTab 
+        ActiveClass="border-indigo-500 text-indigo-600 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm" 
+        Class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+    ...
 ...
 ```

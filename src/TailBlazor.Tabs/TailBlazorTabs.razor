@@ -1,7 +1,7 @@
 @namespace TailBlazor.Tabs
 
 <CascadingValue Value=this>
-    <nav class="@NavClass" aria-label="Tabs">
+    <nav class="@Class" aria-label="Tabs">
         @ChildContent
     </nav>
 </CascadingValue>
@@ -10,11 +10,7 @@
 
 @code {
     [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public string NavClass { get; set; } = "flex space-x-8 w-full";
-    [Parameter] public string ActiveTabClass { get; set; } = $"bg-gray-300 text-gray-700 {_baseTabClass}";
-    [Parameter] public string DefaultTabClass { get; set; } = $"text-gray-500 hover:text-gray-700 {_baseTabClass}";
-
-    private static string _baseTabClass = "px-3 py-2 font-medium text-sm rounded-md cursor-pointer";
+    [Parameter] public string Class { get; set; } = "flex space-x-8 w-full";
 
     public ITab ActiveTab { get; private set; }
 
