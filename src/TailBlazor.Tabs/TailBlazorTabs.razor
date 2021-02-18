@@ -11,6 +11,7 @@
 @code {
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public string Class { get; set; } = "flex space-x-8 w-full";
+    [Parameter] public EventCallback<ITab> OnClickCallback { get; set; }
 
     public ITab ActiveTab { get; private set; }
 
@@ -36,6 +37,7 @@
         ActiveTab = tab;
         try
         {
+            OnClickCallback.InvokeAsync(ActiveTab);
             // Cannot process pending renders after the renderer has been disposed? try/catch hides this but gotta fix
             InvokeAsync(() => { StateHasChanged(); });
         }

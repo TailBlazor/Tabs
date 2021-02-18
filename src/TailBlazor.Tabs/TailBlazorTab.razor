@@ -1,7 +1,8 @@
 @namespace TailBlazor.Tabs
 @implements ITab
 
-<button @onclick="Activate" @onclick:preventDefault class="@(ContainerTabs.ActiveTab == this ? ActiveClass : Class)">
+<button @onclick="@((e) => Activate(e))" @onclick:preventDefault
+    class="@(ContainerTabs.ActiveTab == this ? ActiveClass : Class)">
     @if (TitleContent != null) {
         @TitleContent
     } else {
@@ -18,6 +19,7 @@
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public RenderFragment TitleContent { get; set; }
     [Parameter] public RenderFragment TabContent { get; set; }
+    [Parameter] public EventCallback<ITab> OnClickCallback { get; set; }
 
     private static string _baseTabClass = "px-3 py-2 font-medium text-sm rounded-md cursor-pointer";
     
@@ -26,9 +28,10 @@
         ContainerTabs.AddTab(this);
     }
 
-    void Activate()
+    void Activate(MouseEventArgs e)
     {
         ContainerTabs.SetActivateTab(this);
+        OnClickCallback.InvokeAsync(this.ContainerTabs.ActiveTab);
         StateHasChanged();
     }
 }

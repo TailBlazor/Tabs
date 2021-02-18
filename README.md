@@ -75,3 +75,67 @@ On top of being able to use `TitleContent`, you can also specify `ActiveClass` a
     ...
 ...
 ```
+
+### 5. Using EventCallbacks
+
+You can get the onclick event for individual tabs or throw a single callback on the parent to get back the click event of whatever the active tab is
+
+Example of using the callback on the Tabs parent
+```
+<TailBlazor.Tabs.TailBlazorTabs OnClickCallback=OnParentClickEvent>
+    <TailBlazor.Tabs.TailBlazorTab Title="Counter Tab">
+        <p>Counter: @(counter)</p>
+    </TailBlazor.Tabs.TailBlazorTab>
+    <TailBlazor.Tabs.TailBlazorTab>
+        <TitleContent>
+            Another Tab
+        </TitleContent>
+        <TabContent>
+            ...
+        </TabContent>
+    </TailBlazor.Tabs.TailBlazorTab>
+</TailBlazor.Tabs.TailBlazorTabs>
+
+@code {
+    public string Test { get; set; } = "first";
+
+    int counter = 1;
+
+    void OnParentClickEvent(ITab tab)
+    {
+        Console.WriteLine($"Tab: {tab.Title} was clicked.");
+        counter++;
+    }
+}
+```
+
+
+Example of using the callback on a specific Tab
+```
+@page "/Tabs"
+@using TailBlazor.Tabs
+
+<TailBlazor.Tabs.TailBlazorTabs>
+    <TailBlazor.Tabs.TailBlazorTab OnClickCallback=OnClickEvent Title="Test">
+        <p>@(Test)</p>
+    </TailBlazor.Tabs.TailBlazorTab>
+    <TailBlazor.Tabs.TailBlazorTab>
+        <TitleContent>
+            Second Tab
+        </TitleContent>
+        <TabContent>
+            ...
+        </TabContent>
+    </TailBlazor.Tabs.TailBlazorTab>
+</TailBlazor.Tabs.TailBlazorTabs>
+
+@code {
+    int counter = 1;
+
+    void OnClickEvent(ITab tab)
+    {
+        Test = tab.Title + counter;
+        counter++;
+    }
+}
+```

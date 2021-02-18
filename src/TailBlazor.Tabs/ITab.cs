@@ -7,5 +7,6 @@ namespace TailBlazor.Tabs
         RenderFragment ChildContent { get; }
         RenderFragment TitleContent { get; }
         RenderFragment TabContent { get; }
+        string Title { get; }
     }
 }
