@@ -28,10 +28,10 @@ Add line to your \_Imports.razor
 
 ### 2. Create Tabs Component
 
-Inside your page create your tabs component with the basic format below. For tabs styles, use the `class` parameter. Anything inside the `TailBlazorTab` automatically maps to the ChildContext and is displayed at the content for the tab. Using the parameter `title` inside the tab let's you name the tab.
+Inside your page create your tabs component with the basic format below. For tabs styles, use the `Class` parameter. Anything inside the `TailBlazorTab` automatically maps to the ChildContext and is displayed at the content for the tab. Using the parameter `title` inside the tab let's you name the tab.
 
 ```
-<TailBlazorTabs class="py-10">
+<TailBlazorTabs Class="py-10">
     <TailBlazorTab title="Tab 1 Title">
         ...
     </TailBlazorTab>
@@ -41,7 +41,7 @@ Inside your page create your tabs component with the basic format below. For tab
 </TailBlazorTabs>
 ```
 
-### 3. Using TitleContext and TabContent instead of ChildContent
+### 3. Using TitleContent and TabContent instead of ChildContent
 
 Using ChildContext is great for about 95% of Tab use cases. However sometimes you want full control over the html inside the button. This is where `TitleContent` comes in.
 
@@ -65,7 +65,7 @@ Keep in mind if you use the `TitleContent`, you must then also use the `TabConte
 
 ### 4. Additional Styles
 
-On top of being able to use `TitleContent`, you can also specify `ActiveClass` and default `class` to show which tab is active and not. When the tab is active, the `class` parameter is completely replaced by the `ActiveClass` you giving you more control over just adding styles.
+On top of being able to use `TitleContent`, you can also specify `ActiveClass` and default `Class` to show which tab is active and not. When the tab is active, the `Class` parameter is completely replaced by the `ActiveClass` you giving you more control over just adding styles.
 
 ```
 <TailBlazorTabs class="my-10 border-b border-grey-600 flex space-x-8">
@@ -136,6 +136,34 @@ Example of using the callback on a specific Tab
     {
         Test = tab.Title + counter;
         counter++;
+    }
+}
+```
+
+### 6. Setting Active Tab
+
+Sometimes you may want to set the active tab on intialization or even switch based off user interaction. The tabs are automatically numbered 0-X based of position from left to right. For example if you had three tabs they would have the Id of 0, 1, 2.
+
+Setting the tab can be done as follows
+
+
+```
+<TailBlazor.Tabs.TailBlazorTabs @bind-SelectedTab=activeTab>
+    <TailBlazor.Tabs.TailBlazorTab Class="border-transparent text-gray-500 hover:text-gray-700>
+    ...
+
+...
+
+<button @onclick=SwitchTab class="py-3 px-6 bg-blue-400 text-white">
+    Switch Tab
+</button>
+
+@code {
+    int activeTab = 1;
+
+    void SwitchTab()
+    {
+        activeTab = 0;
     }
 }
 ```

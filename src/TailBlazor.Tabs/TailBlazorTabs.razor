@@ -9,11 +9,29 @@
 @(ActiveTab?.TabContent ?? ActiveTab?.ChildContent)
 
 @code {
+
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public string Class { get; set; } = "flex space-x-8 w-full";
     [Parameter] public EventCallback<ITab> OnClickCallback { get; set; }
+    [Parameter] public EventCallback<int> SelectedTabChanged { get; set; } 
+    [Parameter] public int SelectedTab { 
+        get => _selectedTabId;
+        set
+        {
+            if (_selectedTabId == value ) return;
+            var activeTab = Tabs.FirstOrDefault(t => t.Id == value);
 
+            if (activeTab != null) {
+                _selectedTabId = value;
+                SetActivateTab(activeTab, true);
+                SelectedTabChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    private int _selectedTabId;
     public ITab ActiveTab { get; private set; }
+    public List<ITab> Tabs { get; private set; } = new List<ITab>();
 
     public void AddTab(ITab tab)
     {
@@ -21,6 +39,7 @@
         {
             SetActivateTab(tab);
         }
+        Tabs.Add(tab);
     }
 
     public void RemoveTab(ITab tab)
@@ -29,15 +48,22 @@
         {
             SetActivateTab(null);
         }
+        Tabs.Remove(tab);
     }
 
-    public void SetActivateTab(ITab tab)
+    public void SetActivateTab(ITab tab, bool forceTabActivate = false)
     {
+
         if (ActiveTab == tab) return;
         ActiveTab = tab;
+        SelectedTab = tab.Id;
         try
         {
-            OnClickCallback.InvokeAsync(ActiveTab);
+
+            if (forceTabActivate)
+                ActiveTab.Activate();
+
+            OnClickCallback.InvokeAsync(tab);
             // Cannot process pending renders after the renderer has been disposed? try/catch hides this but gotta fix
             InvokeAsync(() => { StateHasChanged(); });
         }
