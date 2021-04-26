@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>TailBlazor.Tabs</PackageId>
     <RootNamespace>TailBlazor.Tabs</RootNamespace>
-    <Version>1.1.1</Version>
+    <Version>1.1.5</Version>
     <Authors>Taylor Watson</Authors>
     <IsPackage>true</IsPackage>
     <PackageTags>Blazor; TailBlazorcss; TailBlazor css; tailwind; tailwindcss; Tabs; Tab;</PackageTags>

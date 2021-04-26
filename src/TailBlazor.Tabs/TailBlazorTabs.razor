@@ -1,19 +1,28 @@
 @namespace TailBlazor.Tabs
 
 <CascadingValue Value=this>
-    <nav class="@Class" aria-label="Tabs">
-        @ChildContent
-    </nav>
+    <div class="@(NavWrapperClass)">
+        <nav class="@Class" aria-label="@(AriaLabel)">
+            @ChildContent
+        </nav>
+    </div>
 </CascadingValue>
 
-@(ActiveTab?.TabContent ?? ActiveTab?.ChildContent)
+<div class="@(TabsWrapperClass)">
+    @(ActiveTab?.TabContent ?? ActiveTab?.ChildContent)
+</div>
 
 @code {
 
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string NavWrapperClass { get; set; }
+    [Parameter] public string TabsWrapperClass { get; set; }
     [Parameter] public string Class { get; set; } = "flex space-x-8 w-full";
+    [Parameter] public string AriaLabel { get; set; } = "Tabs";
     [Parameter] public EventCallback<ITab> OnClickCallback { get; set; }
     [Parameter] public EventCallback<int> SelectedTabChanged { get; set; } 
+    [Parameter] public string DefaultTabClass { get; set; } = "px-3 py-2 font-medium text-sm rounded-md cursor-pointer text-gray-500 hover:text-gray-700";
+    [Parameter] public string DefaultTabActiveClass { get; set; } = "px-3 py-2 font-medium text-sm rounded-md cursor-pointer bg-gray-300 text-gray-700";
     [Parameter] public int SelectedTab { 
         get => _selectedTabId;
         set

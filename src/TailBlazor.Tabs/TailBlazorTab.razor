@@ -1,33 +1,39 @@
 @namespace TailBlazor.Tabs
 @implements ITab
 
-<button @onclick="@Activate" @onclick:preventDefault
+<span @onclick="@Activate" aria-label="@(AriaLabel)" @onclick:preventDefault
     class="@(ContainerTabs.ActiveTab == this ? ActiveClass : Class)">
     @if (TitleContent != null) {
         @TitleContent
     } else {
         @Title
     }
-</button>
+</span>
 
 
 @functions {
 
     [CascadingParameter] public TailBlazorTabs ContainerTabs { get; set; }
-    [Parameter] public string ActiveClass { get; set; } = $"bg-gray-300 text-gray-700 {_baseTabClass}";
-    [Parameter] public string Class { get; set; } = $"text-gray-500 hover:text-gray-700 {_baseTabClass}";
+    [Parameter] public string ActiveClass { get; set; }
+    [Parameter] public string Class { get; set; }
     [Parameter] public string Title { get; set; }
+    [Parameter] public string AriaLabel { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public RenderFragment TitleContent { get; set; }
     [Parameter] public RenderFragment TabContent { get; set; }
     [Parameter] public EventCallback<ITab> OnClickCallback { get; set; }
 
     public int Id { get; private set; }
-    
-    private static string _baseTabClass = "px-3 py-2 font-medium text-sm rounded-md cursor-pointer";
-    
+        
     protected override void OnInitialized()
     {
+        if (String.IsNullOrEmpty(Class))
+            Class = ContainerTabs.DefaultTabClass;    
+        if (String.IsNullOrEmpty(ActiveClass))
+            ActiveClass = ContainerTabs.DefaultTabActiveClass;
+        if (String.IsNullOrEmpty(AriaLabel))
+            AriaLabel = Title;
+
         Id = ContainerTabs.Tabs.Count();
         // make sure at least one tab is active
         ContainerTabs.AddTab(this);
